@@ -12,10 +12,7 @@
       "runtimeExecutable": "sdfiu",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
-      "preLaunchTask": "${defaultBuildTask}",
-			"env": {
-				"VSCODE_CLI": "/absolute/path/to/code"
-			}
+      "preLaunchTask": "${defaultBuildTask}"
     }
   ]
 }

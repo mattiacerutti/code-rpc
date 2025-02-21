@@ -1,13 +1,15 @@
 import {SetActivity} from "@xhayper/discord-rpc";
 import {ContextManager} from "./context-manager";
-import {Activity, ActivityStatus} from "./types/activity";
-import {replaceData} from "./utils";
-
+import {Activity, ActivityStatus} from "../types/activity";
+import {replaceData} from "../utils";
+import {IdleManager} from "./idle-manager";
 export class ActivityManager {
   private dataRetriever: ContextManager;
+  private idleManager: IdleManager;
 
-  constructor() {
+  constructor(idleManager: IdleManager) {
     this.dataRetriever = new ContextManager();
+    this.idleManager = idleManager;
   }
 
   public getActivity(): Activity {
@@ -23,6 +25,9 @@ export class ActivityManager {
   }
 
   private getActivityStatus(): ActivityStatus {
+    if (this.idleManager.isIdle()) {
+      return ActivityStatus.IDLE;
+    }
     if (this.dataRetriever.isInFile()) {
       return ActivityStatus.IN_FILE;
     }
@@ -35,7 +40,7 @@ export class ActivityManager {
   private getRelevantData(status: ActivityStatus): Record<string, string> {
     switch (status) {
       case ActivityStatus.IN_FILE:
-      return this.dataRetriever.getFileDetails();
+        return this.dataRetriever.getFileDetails();
       case ActivityStatus.IN_WORKSPACE:
         return this.dataRetriever.getWorkspaceDetails();
       case ActivityStatus.DEBUGGING:

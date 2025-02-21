@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import PresenceManager from "./presence-manager";
+import PresenceManager from "./services/presence-manager";
 
 export function activate(context: vscode.ExtensionContext) {
   //Register command "testConnection"

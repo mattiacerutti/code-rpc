@@ -1,19 +1,39 @@
 import {Client} from "@xhayper/discord-rpc";
 import {ActivityManager} from "./activity-manager";
+import {IdleManager} from "./idle-manager";
+
+const MOCK_IDLE_DISCONNECT_SETTING = true;
 
 export default class PresenceManager {
   private updateInterval: NodeJS.Timeout | null = null;
   private client: Client;
   private activityManager: ActivityManager;
+  private idleManager: IdleManager;
 
   constructor(clientId: string) {
     this.client = new Client({
       clientId,
     });
-    this.activityManager = new ActivityManager();
+    this.idleManager = new IdleManager();
+    this.activityManager = new ActivityManager(this.idleManager);
+
+    if (MOCK_IDLE_DISCONNECT_SETTING) {
+      this.idleManager.onIdleChange((isIdle) => {
+        if (isIdle) {
+          this.stopAndDisconnect();
+        } else {
+          this.connectAndStartUpdating();
+        }
+      });
+    }
+
   }
 
   public async connectAndStartUpdating() {
+    if (this.client.isConnected) {
+      return;
+    }
+
     await this.connectToClient();
     this.startUpdating();
   }
@@ -44,6 +64,7 @@ export default class PresenceManager {
   }
 
   private updatePresence() {
+
     const activity = this.activityManager.getActivity();
 
     this.client.user?.setActivity(activity.activityDetails);
