@@ -1,6 +1,7 @@
 import {Client} from "@xhayper/discord-rpc";
 import {ActivityManager} from "./activity-manager";
 import {IdleManager} from "./idle-manager";
+import { getEditorImage } from "../utils";
 
 const MOCK_IDLE_DISCONNECT_SETTING = false;
 
@@ -10,12 +11,16 @@ export default class PresenceManager {
   private activityManager: ActivityManager;
   private idleManager: IdleManager;
 
+  private editorName: string;
+
   constructor(clientId: string) {
     this.client = new Client({
       clientId,
     });
     this.idleManager = new IdleManager();
     this.activityManager = new ActivityManager(this.idleManager);
+
+    this.editorName = this.activityManager.getEditorName();
 
     if (MOCK_IDLE_DISCONNECT_SETTING) {
       this.idleManager.onIdleChange((isIdle) => {
@@ -70,8 +75,12 @@ export default class PresenceManager {
     this.client.user?.setActivity({
       ...activity.activityDetails,
       startTimestamp: this.idleManager.getLastActivityTimestamp(),
-      
+      smallImageKey: getEditorImage(this.editorName),
+      smallImageText: this.editorName,
+    }).then((value) => {
+      console.log("Updated presence to: ", value);
+    }).catch((error) => {
+      console.error("Error updating presence: ", error);
     });
-    console.log("Updated presence to: ", activity.activityDetails);
   }
 }

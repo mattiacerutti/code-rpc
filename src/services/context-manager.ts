@@ -87,6 +87,10 @@ export class ContextManager {
     return null;
   }
 
+  public getEditorName(): string {
+    return vscode.env.appName;
+  }
+
   private getFileLanguageId(activeTextEditor: vscode.TextEditor): string | null {
     const langaugeId = activeTextEditor.document.languageId;
     if (langaugeId) {

@@ -9,7 +9,7 @@ export class IdleManager {
   private IDLE: boolean = false;
   private eventEmitter = new vscode.EventEmitter<boolean>();
 
-  constructor(timeout: number = 10 * 60 * 1000) {
+  constructor(timeout: number = 5 * 60 * 1000) {
     if (timeout < 20 * 1000) {
       throw new Error("Timeout can't be less then 20s due to discord-rpc's rate limits");
     }

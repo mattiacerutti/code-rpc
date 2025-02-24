@@ -8,8 +8,19 @@ export function isLanguageSupported(language: string): boolean {
 }
 
 export function getLanguageImage(localImageName: string): string {
-  return `https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/icons/${localImageName}.png`;
+  return `https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/languages/${localImageName}.png`;
 }
+
+export function getEditorImage(editorName: string): string {
+  const images = {
+    "Cursor": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/cursor.png",
+    "VS Code": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/vscode.png",
+    "VS Code Insiders": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/vscode-insiders.png",
+  };
+
+  return images[editorName as keyof typeof images] || images["VS Code"];
+}
+
 
 export function testRegex(input: string, testString: string): boolean {
   let regex;
