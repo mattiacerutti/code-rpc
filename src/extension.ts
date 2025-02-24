@@ -5,6 +5,8 @@ export function activate(context: vscode.ExtensionContext) {
   //Register command "testConnection"
   console.log("Code RPC extension activated");
 
-  const presenceManager = new PresenceManager("1342149603851501578");
+  const APP_ID = "1343552289717096488";
+
+  const presenceManager = new PresenceManager(APP_ID);
   presenceManager.connectAndStartUpdating();
 }

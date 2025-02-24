@@ -2,7 +2,7 @@ import {Client} from "@xhayper/discord-rpc";
 import {ActivityManager} from "./activity-manager";
 import {IdleManager} from "./idle-manager";
 
-const MOCK_IDLE_DISCONNECT_SETTING = true;
+const MOCK_IDLE_DISCONNECT_SETTING = false;
 
 export default class PresenceManager {
   private updateInterval: NodeJS.Timeout | null = null;
@@ -67,6 +67,11 @@ export default class PresenceManager {
 
     const activity = this.activityManager.getActivity();
 
-    this.client.user?.setActivity(activity.activityDetails);
+    this.client.user?.setActivity({
+      ...activity.activityDetails,
+      startTimestamp: this.idleManager.getLastActivityTimestamp(),
+      
+    });
+    console.log("Updated presence to: ", activity.activityDetails);
   }
 }

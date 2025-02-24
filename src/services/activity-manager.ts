@@ -1,8 +1,9 @@
 import {SetActivity} from "@xhayper/discord-rpc";
 import {ContextManager} from "./context-manager";
 import {Activity, ActivityStatus} from "../types/activity";
-import {replaceData} from "../utils";
+import {replaceEnvVariables} from "../utils";
 import {IdleManager} from "./idle-manager";
+
 export class ActivityManager {
   private dataRetriever: ContextManager;
   private idleManager: IdleManager;
@@ -14,9 +15,12 @@ export class ActivityManager {
 
   public getActivity(): Activity {
     const status = this.getActivityStatus();
-    const data = this.getRelevantData(status);
+    const envVariables = this.dataRetriever.getEnvVariables();
 
-    const activityDetails = this.formatActivityDetails(status, data);
+    const activityDetails = this.formatActivityDetails(status, envVariables);
+
+    const activityImage = this.getActivityImage(status) ?? undefined;
+    activityDetails.largeImageKey = activityImage;
 
     return {
       status,
@@ -37,46 +41,47 @@ export class ActivityManager {
     return ActivityStatus.IN_EDITOR;
   }
 
-  private getRelevantData(status: ActivityStatus): Record<string, string> {
+  private getActivityImage(status: ActivityStatus): string | null {
     switch (status) {
       case ActivityStatus.IN_FILE:
-        return this.dataRetriever.getFileDetails();
-      case ActivityStatus.IN_WORKSPACE:
-        return this.dataRetriever.getWorkspaceDetails();
-      case ActivityStatus.DEBUGGING:
-      // return this.dataRetriever.getDebuggingDetails();
-      default:
-        return {};
+        return this.dataRetriever.getCurrentFileImage();
     }
+    return null;
   }
 
-  private formatActivityDetails(status: ActivityStatus, data: Record<string, string>): SetActivity {
+  private formatActivityDetails(status: ActivityStatus, envVariables: Record<string, string | null>): SetActivity {
     const templates = {
       [ActivityStatus.IN_FILE]: {
         state: "Editing {{currentFileName}}",
         details: "In {{currentWorkspaceName}}",
+        largeImageText: "Editing a {{currentFileExtension}} file",
       },
       [ActivityStatus.IN_WORKSPACE]: {
         state: "No file open",
         details: "In {{currentWorkspaceName}}",
+        largeImageText: null,
       },
       [ActivityStatus.IN_EDITOR]: {
         state: "No project open",
         details: null,
+        largeImageText: null,
       },
       [ActivityStatus.DEBUGGING]: {
         state: "Debugging {{currentFileName}}",
         details: "Debugging {{currentFileName}}",
+        largeImageText: null,
       },
       [ActivityStatus.IDLE]: {
         state: "Idle",
         details: "Idle",
+        largeImageText: null,
       },
     };
 
     return {
-      state: replaceData(data, templates[status].state),
-      details: templates[status].details ? replaceData(data, templates[status].details) : undefined,
+      state: replaceEnvVariables(envVariables, templates[status].state),
+      details: templates[status].details ? replaceEnvVariables(envVariables, templates[status].details) : undefined,
+      largeImageText: templates[status].largeImageText ? replaceEnvVariables(envVariables, templates[status].largeImageText) : undefined,
     };
   }
 }
