@@ -3,11 +3,9 @@ import {ContextManager} from "./context-manager";
 import {Activity, ActivityStatus} from "../types/activity";
 import {replaceEnvVariables} from "../utils";
 import {IdleManager} from "./idle-manager";
-import { Variable } from "../types/variables";
-
-const DEFAULT_IDLE_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png";
-const DEFAULT_DEBUGGING_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png";
-const PLACEHOLDER_IMAGE= "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/placeholder.png";
+import {Variable} from "../types/variables";
+import { SettingsManager } from "./settings-manager";
+import * as supportedIde from "../data/ide.json";
 
 export class ActivityManager {
   private contextManager: ContextManager;
@@ -24,7 +22,7 @@ export class ActivityManager {
 
     const activityDetails = this.formatActivityDetails(status, envVariables);
 
-    const activityImage = this.getActivityImage(status) ?? PLACEHOLDER_IMAGE;
+    const activityImage = this.getActivityImage(status) ?? SettingsManager.instance.getPlaceholderImage();
     activityDetails.largeImageKey = activityImage;
 
     return {
@@ -45,7 +43,7 @@ export class ActivityManager {
     }
     if (this.contextManager.isInDebugging()) {
       return ActivityStatus.DEBUGGING;
-    } 
+    }
     return ActivityStatus.IN_EDITOR;
   }
 
@@ -54,50 +52,48 @@ export class ActivityManager {
       case ActivityStatus.IN_FILE:
         return this.contextManager.getCurrentFileImage();
       case ActivityStatus.DEBUGGING:
-        return DEFAULT_DEBUGGING_IMAGE;
+        return SettingsManager.instance.getDebuggingImage();
       case ActivityStatus.IDLE:
-        return DEFAULT_IDLE_IMAGE;
+        return SettingsManager.instance.getIdleImage();
     }
     return null;
   }
 
   public getEditorName(): string {
-    return this.contextManager.getEditorName();
+    const editorName = this.contextManager.getEditorName();
+    
+    const isIdeSupported = Object.keys(supportedIde).includes(editorName);
+    if (isIdeSupported) {
+      return editorName;
+    }
+
+    return "VS Code"; //TODO: Create an appropriate fallback
   }
 
   private formatActivityDetails(status: ActivityStatus, envVariables: Partial<Record<Variable, string | null>>): SetActivity {
-    const templates = {
-      [ActivityStatus.IN_FILE]: {
-        state: "Editing {{currentFileName}}",
-        details: "In workspace: {{currentWorkspaceName}}",
-        largeImageText: "Editing a {{currentFileExtensionTruncated}} file",
-      },
-      [ActivityStatus.IN_WORKSPACE]: {
-        state: "No file currently open",
-        details: "In workspace: {{currentWorkspaceName}}",
-        largeImageText: null,
-      },
-      [ActivityStatus.IN_EDITOR]: {
-        state: "No project currently open",
-        details: "In the editor",
-        largeImageText: null,
-      },
-      [ActivityStatus.DEBUGGING]: {
-        state: "Debugging {{currentFileName}}",
-        details: "Debugging {{currentFileName}}",
-        largeImageText: null,
-      },
-      [ActivityStatus.IDLE]: {
-        state: "Inactive..",
-        details: null,
-        largeImageText: "💤",
-      },
-    };
+    let templates;
+    switch (status) {
+      case ActivityStatus.IN_FILE:
+        templates = SettingsManager.instance.getActivityOnFile();
+        break;
+      case ActivityStatus.IN_WORKSPACE:
+        templates = SettingsManager.instance.getActivityOnWorkspace();
+        break;
+      case ActivityStatus.IN_EDITOR:
+        templates = SettingsManager.instance.getActivityOnEditor();
+        break;
+      case ActivityStatus.DEBUGGING:
+        templates = SettingsManager.instance.getActivityOnDebugging();
+        break;
+      case ActivityStatus.IDLE:
+        templates = SettingsManager.instance.getActivityOnIdle();
+        break;
+    }
 
     return {
-      state: replaceEnvVariables(envVariables, templates[status].state),
-      details: templates[status].details ? replaceEnvVariables(envVariables, templates[status].details) : undefined,
-      largeImageText: templates[status].largeImageText ? replaceEnvVariables(envVariables, templates[status].largeImageText) : undefined,
+      state: templates.upperText ? replaceEnvVariables(envVariables, templates.upperText) : undefined,
+      details: templates.lowerText ? replaceEnvVariables(envVariables, templates.lowerText) : undefined,
+      largeImageText: templates.imageText ? replaceEnvVariables(envVariables, templates.imageText) : undefined,
     };
   }
 }

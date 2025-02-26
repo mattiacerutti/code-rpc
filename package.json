@@ -23,7 +23,152 @@
         "command": "code-rpc.disconnect",
         "title": "Disconnect from Discord"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Code RPC",
+      "properties": {
+        "codeRpc.disconnectOnIdle": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disconnect from Discord RPC when idle. Once no more idle, it will reconnect automatically."
+        },
+        "codeRpc.idleTimeout": {
+          "type": "number",
+          "default": 300,
+          "description": "The timeout in seconds to consider the user as idle."
+        },
+        "codeRpc.resetElapsedTimeOnIdle": {
+          "type": "boolean",
+          "default": false,
+          "description": "When the user goes in or out of idle, the elapsed time will be reset."
+        },
+        "codeRpc.idleImage": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png",
+          "description": "The image to use when the user is idle."
+        },
+        "codeRpc.debuggingImage": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png",
+          "description": "The image to use when the user is debugging."
+        },
+        "codeRpc.placeholderImage": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/placeholder.png",
+          "description": "The image to use when the user is not in a file, workspace or debugging."
+        },
+        "codeRpc.languageImageTemplate": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/languages/{{language}}.png",
+          "description": "The template to use to get the language image. The {{language}} will be replaced with the language name found in the languages JSON file."
+        },
+        "codeRpc.ideImageTemplate": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/{{ide}}.png",
+          "description": "The template to use to get the IDE image. The {{ide}} will be replaced with the IDE name found in the ide JSON file."
+        },
+        "codeRpc.activityOnFile": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "Editing {{currentFileName}}",
+              "description": "The upper text to use when the user is in a file."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": "In workspace: {{currentWorkspaceName}}",
+              "description": "The lower text to use when the user is in a file."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": "Editing a {{currentFileExtensionTruncated}} file",
+              "description": "The text displayed when hovering over the large image when the user is in a file."
+            }
+          }
+        },
+        "codeRpc.activityOnWorkspace": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "No file currently open",
+              "description": "The upper text to use when the user is not in a file (but still in a workspace)."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": "In workspace: {{currentWorkspaceName}}",
+              "description": "The lower text to use when the user is not in a file (but still in a workspace)."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "The text displayed when hovering over the large image when the user is not in a file (but still in a workspace)."
+            }
+          }
+        },
+        "codeRpc.activityOnEditor": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "No project currently open",
+              "description": "The upper text to use when the user is not in a file or workspace."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": "In the editor",
+              "description": "The lower text to use when the user is not in a file or workspace."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "The text displayed when hovering over the large image when the user is not in a file or workspace."
+            }
+          }
+        },
+        "codeRpc.activityOnDebugging": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "Debugging {{currentFileName}}",
+              "description": "The upper text to use when the user is debugging."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": "Debugging {{currentFileName}}",
+              "description": "The lower text to use when the user is debugging."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "The text displayed when hovering over the large image when the user is debugging."
+            }
+          }
+        },
+        "codeRpc.activityOnIdle": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "Inactive..",
+              "description": "The upper text to use when the user is idle."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "The lower text to use when the user is idle."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": "💤",
+              "description": "The text displayed when hovering over the large image when the user is idle."
+            }
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

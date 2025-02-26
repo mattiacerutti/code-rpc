@@ -2,27 +2,27 @@ import {Client} from "@xhayper/discord-rpc";
 import {ActivityManager} from "./activity-manager";
 import {IdleManager} from "./idle-manager";
 import { getEditorImage } from "../utils";
-
-const MOCK_IDLE_DISCONNECT_SETTING = false;
+import { SettingsManager } from "./settings-manager";
 
 export default class PresenceManager {
   private updateInterval: NodeJS.Timeout | null = null;
   private client: Client;
-  private activityManager: ActivityManager;
   private idleManager: IdleManager;
-
   private editorName: string;
+  
+  private activityManager: ActivityManager;
+  
 
   constructor(clientId: string) {
     this.client = new Client({
       clientId,
     });
-    this.idleManager = new IdleManager();
+    this.idleManager = new IdleManager(SettingsManager.instance.getIdleTimeout());
     this.activityManager = new ActivityManager(this.idleManager);
 
     this.editorName = this.activityManager.getEditorName();
 
-    if (MOCK_IDLE_DISCONNECT_SETTING) {
+    if (SettingsManager.instance.getDisconnectOnIdle()) {
       this.idleManager.onIdleChange((isIdle) => {
         if (isIdle) {
           this.stopAndDisconnect();

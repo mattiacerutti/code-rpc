@@ -1,7 +1,9 @@
 import * as vscode from "vscode";
+import { MIN_IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT } from "../constants";
+import { SettingsManager } from "./settings-manager";
 
 export class IdleManager {
-  private timerDuration;
+  private timerDuration: number;
   private timer: NodeJS.Timeout | null = null;
 
   private lastActivityTimestamp: number;
@@ -9,9 +11,9 @@ export class IdleManager {
   private IDLE: boolean = false;
   private eventEmitter = new vscode.EventEmitter<boolean>();
 
-  constructor(timeout: number = 5 * 60 * 1000) {
-    if (timeout < 20 * 1000) {
-      throw new Error("Timeout can't be less then 20s due to discord-rpc's rate limits");
+  constructor(timeout: number = DEFAULT_IDLE_TIMEOUT) {
+    if (timeout < MIN_IDLE_TIMEOUT ) {
+      throw new Error(`Timeout can't be less then ${MIN_IDLE_TIMEOUT}s due to discord-rpc's rate limits`);
     }
     this.timerDuration = timeout;
     this.startNewTimer();
@@ -38,7 +40,7 @@ export class IdleManager {
 
     this.timer = setTimeout(() => {
       this.setIdle(true);
-    }, this.timerDuration);
+    }, this.timerDuration * 1000);
   }
 
   private resetTimer(): void {
@@ -51,7 +53,9 @@ export class IdleManager {
       return;
     }
 
-    this.lastActivityTimestamp = new Date().getTime();
+    if (SettingsManager.instance.getResetElapsedTimeOnIdle() === true) {
+      this.lastActivityTimestamp = new Date().getTime();
+    }
     
     this.IDLE = value;
     this.eventEmitter.fire(this.IDLE);

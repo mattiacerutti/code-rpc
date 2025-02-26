@@ -1,24 +1,21 @@
+import { SettingsManager } from "./services/settings-manager";
+import * as supportedIde from "./data/ide.json";
+
 export function replaceEnvVariables(data: Record<string, string | null>, text: string): string {
   return Object.keys(data).reduce((acc, key) => acc.replace(`{{${key}}}`, data[key] ?? ""), text);
 }
 
-export function isLanguageSupported(language: string): boolean {
-    const supportedLanguages = require("./data/languages.json").KNOWN_LANGUAGES;
-    return supportedLanguages.some((lang: any) => lang.language === language);
-}
-
 export function getLanguageImage(localImageName: string): string {
-  return `https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/languages/${localImageName}.png`;
+  const templateLink = SettingsManager.instance.getLanguageImageTemplate();
+  return templateLink.replace("{{language}}", localImageName);
 }
 
 export function getEditorImage(editorName: string): string {
-  const images = {
-    "Cursor": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/cursor.png",
-    "VS Code": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/vscode.png",
-    "VS Code Insiders": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/vscode-insiders.png",
-  };
+  const templateLink = SettingsManager.instance.getIdeImageTemplate();
 
-  return images[editorName as keyof typeof images] || images["VS Code"];
+  const ideId = supportedIde[editorName as keyof typeof supportedIde];
+
+  return templateLink.replace("{{ide}}", ideId);
 }
 
 
@@ -42,3 +39,4 @@ export function testRegex(input: string, testString: string): boolean {
 
   return input === testString;
 }
+
