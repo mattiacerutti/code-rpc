@@ -3,8 +3,10 @@ import {ContextManager} from "./context-manager";
 import {Activity, ActivityStatus} from "../types/activity";
 import {replaceEnvVariables} from "../utils";
 import {IdleManager} from "./idle-manager";
+import { Variable } from "../types/variables";
 
 const DEFAULT_IDLE_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png";
+const DEFAULT_DEBUGGING_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png";
 const PLACEHOLDER_IMAGE= "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/placeholder.png";
 
 export class ActivityManager {
@@ -41,6 +43,9 @@ export class ActivityManager {
     if (this.contextManager.isInWorkspace()) {
       return ActivityStatus.IN_WORKSPACE;
     }
+    if (this.contextManager.isInDebugging()) {
+      return ActivityStatus.DEBUGGING;
+    } 
     return ActivityStatus.IN_EDITOR;
   }
 
@@ -48,6 +53,8 @@ export class ActivityManager {
     switch (status) {
       case ActivityStatus.IN_FILE:
         return this.contextManager.getCurrentFileImage();
+      case ActivityStatus.DEBUGGING:
+        return DEFAULT_DEBUGGING_IMAGE;
       case ActivityStatus.IDLE:
         return DEFAULT_IDLE_IMAGE;
     }
@@ -58,12 +65,12 @@ export class ActivityManager {
     return this.contextManager.getEditorName();
   }
 
-  private formatActivityDetails(status: ActivityStatus, envVariables: Record<string, string | null>): SetActivity {
+  private formatActivityDetails(status: ActivityStatus, envVariables: Partial<Record<Variable, string | null>>): SetActivity {
     const templates = {
       [ActivityStatus.IN_FILE]: {
         state: "Editing {{currentFileName}}",
         details: "In workspace: {{currentWorkspaceName}}",
-        largeImageText: "Editing a {{currentFileExtension}} file",
+        largeImageText: "Editing a {{currentFileExtensionTruncated}} file",
       },
       [ActivityStatus.IN_WORKSPACE]: {
         state: "No file currently open",

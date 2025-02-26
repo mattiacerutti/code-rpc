@@ -2,20 +2,29 @@ import path from "path";
 import * as vscode from "vscode";
 import {SUPPORTED_LANGUAGES, LANGUAGE_EXTENSIONS, SPECIAL_FILES} from "../data/languages.json";
 import {getLanguageImage, testRegex} from "../utils";
+import { Variable } from "../types/variables";
 
 export class ContextManager {
-  public getEnvVariables(): Record<string, string | null> {
+  public getEnvVariables(): Partial<Record<Variable, string | null>> {
     const workspaceFolders = vscode.workspace.workspaceFolders;
     const activeTextEditor = vscode.window.activeTextEditor;
 
     const currentFileName = activeTextEditor ? this.getFileName(activeTextEditor) : null;
+    const currentFilePath = activeTextEditor ? this.getFilePath(activeTextEditor) : null;
+    const currentFileRelativePath = activeTextEditor && workspaceFolders && workspaceFolders.length > 0 ? this.getFileRelativePath(activeTextEditor, workspaceFolders[0]) : null;
     const currentFileExtension = activeTextEditor ? this.getFileExtension(activeTextEditor) : null;
+    const currentFileExtensionTruncated = activeTextEditor ? this.getFileExtensionTruncated(activeTextEditor) : null;
     const currentWorkspaceName = workspaceFolders && workspaceFolders.length > 0 ? this.getWorkspaceName(workspaceFolders) : null;
+    const currentEditorName = this.getEditorName();
 
     return {
-      currentWorkspaceName,
-      currentFileName,
-      currentFileExtension,
+      [Variable.CURRENT_WORKSPACE_NAME]: currentWorkspaceName,
+      [Variable.CURRENT_FILE_NAME]: currentFileName,
+      [Variable.CURRENT_FILE_PATH]: currentFilePath,
+      [Variable.CURRENT_FILE_RELATIVE_PATH]: currentFileRelativePath,
+      [Variable.CURRENT_FILE_EXTENSION]: currentFileExtension,
+      [Variable.CURRENT_FILE_EXTENSION_TRUNCATED]: currentFileExtensionTruncated,
+      [Variable.CURRENT_EDITOR_NAME]: currentEditorName,
     };
   }
 
@@ -29,8 +38,23 @@ export class ContextManager {
     return !!(workspaceFolders && workspaceFolders.length > 0);
   }
 
+  public isInDebugging(): boolean {
+    const debugSession = vscode.debug.activeDebugSession;
+    return !!debugSession;
+  }
+
+  private getFilePath(activeTextEditor: vscode.TextEditor): string {
+    return activeTextEditor.document.uri.fsPath;
+  }
+
+  private getFileRelativePath(activeTextEditor: vscode.TextEditor, workspaceFolder: vscode.WorkspaceFolder): string {
+    const filePath = this.getFilePath(activeTextEditor);
+    const relativePath = path.relative(workspaceFolder.uri.fsPath, filePath);
+    return relativePath;
+  }
+
   private getFileName(activeTextEditor: vscode.TextEditor): string {
-    const filePath = activeTextEditor.document.uri.fsPath;
+    const filePath = this.getFilePath(activeTextEditor);
     const fileName = path.basename(filePath);
 
     return fileName;
@@ -38,7 +62,13 @@ export class ContextManager {
 
 
   private getFileExtension(activeTextEditor: vscode.TextEditor): string {
-    return path.extname(activeTextEditor.document.uri.fsPath);
+    const filePath = this.getFilePath(activeTextEditor);
+    return path.extname(filePath);
+  }
+
+  private getFileExtensionTruncated(activeTextEditor: vscode.TextEditor): string {
+    const fileExtension = this.getFileExtension(activeTextEditor);
+    return fileExtension.replace(".", "");
   }
 
   private getWorkspaceName(workspaceFolders: readonly vscode.WorkspaceFolder[]): string {

@@ -10,14 +10,18 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "code-rpc.helloWorld",
-        "title": "Hello World"
+        "command": "code-rpc.connect",
+        "title": "Connecto to Discord"
+      },
+      {
+        "command": "code-rpc.disconnect",
+        "title": "Disconnect from Discord"
       }
     ]
   },
