@@ -9,11 +9,9 @@ import * as supportedIde from "../data/ide.json";
 
 export class ActivityManager {
   private contextManager: ContextManager;
-  private idleManager: IdleManager;
 
-  constructor(idleManager: IdleManager) {
+  constructor(private idleManager: IdleManager) {
     this.contextManager = new ContextManager();
-    this.idleManager = idleManager;
   }
 
   public getActivity(): Activity {

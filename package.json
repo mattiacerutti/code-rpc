@@ -17,11 +17,11 @@
     "commands": [
       {
         "command": "code-rpc.connect",
-        "title": "Connecto to Discord"
+        "title": "Code RPC: Connect to Discord"
       },
       {
         "command": "code-rpc.disconnect",
-        "title": "Disconnect from Discord"
+        "title": "Code RPC: Disconnect from Discord"
       }
     ],
     "configuration": {
