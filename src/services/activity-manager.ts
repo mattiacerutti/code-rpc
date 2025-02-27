@@ -5,7 +5,6 @@ import {replaceEnvVariables} from "../utils";
 import {IdleManager} from "./idle-manager";
 import {Variable} from "../types/variables";
 import { SettingsManager } from "./settings-manager";
-import * as supportedIde from "../data/ide.json";
 
 export class ActivityManager {
   private contextManager: ContextManager;
@@ -60,12 +59,7 @@ export class ActivityManager {
   public getEditorName(): string {
     const editorName = this.contextManager.getEditorName();
     
-    const isIdeSupported = Object.keys(supportedIde).includes(editorName);
-    if (isIdeSupported) {
-      return editorName;
-    }
-
-    return "VS Code"; //TODO: Create an appropriate fallback
+    return editorName;
   }
 
   private formatActivityDetails(status: ActivityStatus, envVariables: Partial<Record<Variable, string | null>>): SetActivity {

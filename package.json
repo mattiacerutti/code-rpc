@@ -17,57 +17,59 @@
     "commands": [
       {
         "command": "code-rpc.connect",
-        "title": "Code RPC: Connect to Discord"
+        "title": "Code RPC: Connect to Discord",
+        "enablement": "code-rpc.connect"
       },
       {
         "command": "code-rpc.disconnect",
-        "title": "Code RPC: Disconnect from Discord"
+        "title": "Code RPC: Disconnect from Discord",
+        "enablement": "code-rpc.disconnect"
       }
     ],
     "configuration": {
       "title": "Code RPC",
       "properties": {
-        "codeRpc.disconnectOnIdle": {
+        "code-rpc.disconnectOnIdle": {
           "type": "boolean",
           "default": false,
           "description": "Disconnect from Discord RPC when idle. Once no more idle, it will reconnect automatically."
         },
-        "codeRpc.idleTimeout": {
+        "code-rpc.idleTimeout": {
           "type": "number",
           "default": 300,
           "description": "The timeout in seconds to consider the user as idle."
         },
-        "codeRpc.resetElapsedTimeOnIdle": {
+        "code-rpc.resetElapsedTimeOnIdle": {
           "type": "boolean",
           "default": false,
           "description": "When the user goes in or out of idle, the elapsed time will be reset."
         },
-        "codeRpc.idleImage": {
+        "code-rpc.idleImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png",
           "description": "The image to use when the user is idle."
         },
-        "codeRpc.debuggingImage": {
+        "code-rpc.debuggingImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png",
           "description": "The image to use when the user is debugging."
         },
-        "codeRpc.placeholderImage": {
+        "code-rpc.placeholderImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/placeholder.png",
           "description": "The image to use when the user is not in a file, workspace or debugging."
         },
-        "codeRpc.languageImageTemplate": {
+        "code-rpc.languageImageTemplate": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/languages/{{language}}.png",
           "description": "The template to use to get the language image. The {{language}} will be replaced with the language name found in the languages JSON file."
         },
-        "codeRpc.ideImageTemplate": {
+        "code-rpc.ideImageTemplate": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/{{ide}}.png",
           "description": "The template to use to get the IDE image. The {{ide}} will be replaced with the IDE name found in the ide JSON file."
         },
-        "codeRpc.activityOnFile": {
+        "code-rpc.activityOnFile": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -87,7 +89,7 @@
             }
           }
         },
-        "codeRpc.activityOnWorkspace": {
+        "code-rpc.activityOnWorkspace": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -107,7 +109,7 @@
             }
           }
         },
-        "codeRpc.activityOnEditor": {
+        "code-rpc.activityOnEditor": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -127,7 +129,7 @@
             }
           }
         },
-        "codeRpc.activityOnDebugging": {
+        "code-rpc.activityOnDebugging": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -147,7 +149,7 @@
             }
           }
         },
-        "codeRpc.activityOnIdle": {
+        "code-rpc.activityOnIdle": {
           "type": "object",
           "properties": {
             "upperText": {

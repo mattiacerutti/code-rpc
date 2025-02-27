@@ -1,4 +1,4 @@
-export const EXTENSION_NAME = "codeRpc";
+export const EXTENSION_NAME = "code-rpc";
 
 export const MIN_IDLE_TIMEOUT = 20;
 

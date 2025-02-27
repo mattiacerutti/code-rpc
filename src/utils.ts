@@ -13,7 +13,7 @@ export function getLanguageImage(localImageName: string): string {
 export function getEditorImage(editorName: string): string {
   const templateLink = SettingsManager.instance.getIdeImageTemplate();
 
-  const ideId = supportedIde[editorName as keyof typeof supportedIde];
+  let ideId = supportedIde[editorName as keyof typeof supportedIde] ?? "vscode";
 
   return templateLink.replace("{{ide}}", ideId);
 }

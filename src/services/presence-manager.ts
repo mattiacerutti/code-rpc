@@ -1,19 +1,19 @@
 import {Client} from "@xhayper/discord-rpc";
 import {ActivityManager} from "./activity-manager";
 import {IdleManager} from "./idle-manager";
-import { getEditorImage } from "../utils";
-import { SettingsManager } from "./settings-manager";
-
-export default class PresenceManager {
+import {getEditorImage} from "../utils";
+import {SettingsManager} from "./settings-manager";
+import { EventEmitter } from "events";
+export default class PresenceManager extends EventEmitter {
   private updateInterval: NodeJS.Timeout | null = null;
   private client: Client;
   private idleManager: IdleManager;
   private editorName: string;
-  
+
   private activityManager: ActivityManager;
-  
 
   constructor(clientId: string) {
+    super();
     this.client = new Client({
       clientId,
     });
@@ -32,6 +32,13 @@ export default class PresenceManager {
       });
     }
 
+    this.client.on("connected", () => {
+      this.emit("connected");
+    });
+
+    this.client.on("disconnected", () => {
+      this.emit("disconnected");
+    });
   }
 
   public async connectAndStartUpdating() {
@@ -69,18 +76,20 @@ export default class PresenceManager {
   }
 
   private updatePresence() {
-
     const activity = this.activityManager.getActivity();
 
-    this.client.user?.setActivity({
-      ...activity.activityDetails,
-      startTimestamp: this.idleManager.getLastActivityTimestamp(),
-      smallImageKey: getEditorImage(this.editorName),
-      smallImageText: this.editorName,
-    }).then((value) => {
-      console.log("Updated presence to: ", value);
-    }).catch((error) => {
-      console.error("Error updating presence: ", error);
-    });
+    this.client.user
+      ?.setActivity({
+        ...activity.activityDetails,
+        startTimestamp: this.idleManager.getLastActivityTimestamp(),
+        smallImageKey: getEditorImage(this.editorName),
+        smallImageText: this.editorName,
+      })
+      .then((value) => {
+        console.log("Updated presence to: ", value);
+      })
+      .catch((error) => {
+        console.error("Error updating presence: ", error);
+      });
   }
 }
