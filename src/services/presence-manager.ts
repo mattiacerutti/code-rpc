@@ -3,9 +3,13 @@ import {ActivityManager} from "./activity-manager";
 import {IdleManager} from "./idle-manager";
 import {getEditorImage} from "../utils";
 import {SettingsManager} from "./settings-manager";
-import { EventEmitter } from "events";
+import {EventEmitter} from "events";
 export default class PresenceManager extends EventEmitter {
   private updateInterval: NodeJS.Timeout | null = null;
+
+  private reconnectionTimeout: NodeJS.Timeout | null = null;
+  private reconnectionInterval: NodeJS.Timeout | null = null;
+
   private client: Client;
   private idleManager: IdleManager;
   private editorName: string;
@@ -17,6 +21,15 @@ export default class PresenceManager extends EventEmitter {
     this.client = new Client({
       clientId,
     });
+
+    this.client.on("connected", () => {
+      this.emit("connected");
+    });
+
+    this.client.on("disconnected", () => {
+      this.emit("disconnected");
+    });
+
     this.idleManager = new IdleManager(SettingsManager.instance.getIdleTimeout());
     this.activityManager = new ActivityManager(this.idleManager);
 
@@ -32,12 +45,11 @@ export default class PresenceManager extends EventEmitter {
       });
     }
 
-    this.client.on("connected", () => {
-      this.emit("connected");
-    });
-
-    this.client.on("disconnected", () => {
-      this.emit("disconnected");
+    this.on("disconnected", () => {
+      this.stopUpdating();
+      if (SettingsManager.instance.getRetryConnection()) {
+        this.startRetryConnection();
+      }
     });
   }
 
@@ -46,7 +58,12 @@ export default class PresenceManager extends EventEmitter {
       return;
     }
 
-    await this.connectToClient();
+    
+    await this.connectToClient().catch((error) => {
+      this.emit("disconnected");
+      throw error;
+    });
+
     this.startUpdating();
   }
 
@@ -91,5 +108,39 @@ export default class PresenceManager extends EventEmitter {
       .catch((error) => {
         console.error("Error updating presence: ", error);
       });
+  }
+
+  private async startRetryConnection() {
+    if (this.reconnectionTimeout) {
+      clearTimeout(this.reconnectionTimeout);
+      this.reconnectionTimeout = null;
+    }
+    if (this.reconnectionInterval) {
+      clearInterval(this.reconnectionInterval);
+      this.reconnectionInterval = null;
+    }
+
+    // Try re-connecting every 10 seconds.
+    this.reconnectionInterval = setInterval(async () => {
+      try {
+        await this.connectToClient();
+        this.startUpdating();
+
+        clearInterval(this.reconnectionInterval!);
+        this.reconnectionInterval = null;
+
+        clearTimeout(this.reconnectionTimeout!);
+        this.reconnectionTimeout = null;
+      } catch (_) {}
+    }, 10 * 1000);
+
+    // Stop the interval after 2 minutes.
+    this.reconnectionTimeout = setTimeout(() => {
+      clearInterval(this.reconnectionInterval!);
+      this.reconnectionInterval = null;
+
+      clearTimeout(this.reconnectionTimeout!);
+      this.reconnectionTimeout = null;
+    }, 2 * 60 * 1000);
   }
 }

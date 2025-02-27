@@ -14,10 +14,12 @@ import {
   DEFAULT_ACTIVITY_ON_EDITOR,
   DEFAULT_ACTIVITY_ON_DEBUGGING,
   DEFAULT_ACTIVITY_ON_IDLE,
+  DEFAULT_RETRY_CONNECTION,
 } from "../constants";
 
 enum Settings {
   DISCONNECT_ON_IDLE = "disconnectOnIdle",
+  RETRY_CONNECTION = "retryConnection",
   IDLE_TIMEOUT = "idleTimeout",
   RESET_ELAPSED_TIME_ON_IDLE = "resetElapsedTimeOnIdle",
   IDLE_IMAGE = "idleImage",
@@ -60,7 +62,11 @@ export class SettingsManager {
     return this.settings.get(Settings.DISCONNECT_ON_IDLE, DEFAULT_DISCONNECT_ON_IDLE);
   }
 
-  getIdleTimeout(): number {
+  getRetryConnection(): boolean {
+    return this.settings.get(Settings.RETRY_CONNECTION, DEFAULT_RETRY_CONNECTION);
+  }
+
+  getIdleTimeout(): number {  
     return this.settings.get(Settings.IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT);
   }
 

@@ -5,6 +5,7 @@ export const MIN_IDLE_TIMEOUT = 20;
 /* Default values for settings */
 export const DEFAULT_IDLE_TIMEOUT = 5 * 60;
 export const DEFAULT_DISCONNECT_ON_IDLE = false;
+export const DEFAULT_RETRY_CONNECTION = true;
 export const DEFAULT_RESET_ELAPSED_TIME_ON_IDLE = false;
 export const DEFAULT_IDLE_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png";
 export const DEFAULT_DEBUGGING_IMAGE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png";

@@ -34,6 +34,11 @@
           "default": false,
           "description": "Disconnect from Discord RPC when idle. Once no more idle, it will reconnect automatically."
         },
+        "code-rpc.retryConnection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically try to reconnect to Discord RPC for 2 minutes if no connection is established."
+        },
         "code-rpc.idleTimeout": {
           "type": "number",
           "default": 300,
