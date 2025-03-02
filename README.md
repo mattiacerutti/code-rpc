@@ -1,71 +1,41 @@
-# code-rpc README
+# Code RPC  
 
-This is the README for your extension "code-rpc". After writing up a brief description, we recommend including the following sections.
+🚀 A free and open-source VSCode extension that brings your coding activity to Discord with Rich Presence.  
 
-## Features
+## ✨ Features  
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **🔗 Seamless Discord Integration** – Show what you're working on in VSCode directly in your Discord status!  
+- **💻 Works Everywhere** – Compatible with VSCode and all its forks. If your IDE isn’t supported, feel free to submit a PR!  
+- **⚙️ Fully Customizable** – Choose what details to display, hide, or tweak to fit your needs.  
+- **🛠️ Supports 100+ Languages** – Whether you're coding in JavaScript, Python, Rust, or anything else, we’ve got you covered.  
 
-For example if there is an image subfolder under your extension project workspace:
+## 🔀 Available Variables  
 
-\!\[feature X\]\(images/feature-x.png\)
+You can use **variables** inside any of the `upperText`, `lowerText`, or `imageText` fields to dynamically display details about your workspace, files, and editor. These variables will be replaced automatically at runtime.  
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+| Variable | Description |
+|----------|-------------|
+| `{{currentWorkspaceName}}` | The name of the current workspace. |
+| `{{currentFileName}}` | The name of the currently open file (e.g., `index.js`). |
+| `{{currentFilePath}}` | The absolute path to the currently open file. |
+| `{{currentFileRelativePath}}` | The path to the currently open file relative to the workspace. |
+| `{{currentFileExtension}}` | The extension of the currently open file (e.g., `.js`, `.py`). |
+| `{{currentFileExtensionTruncated}}` | The file extension without the leading dot (e.g., `js`, `py`). |
+| `{{currentEditorName}}` | The name of the active editor (e.g., "Visual Studio Code"). |
 
-## Requirements
+#### 🛠 Example Usage  
+```json
+"code-rpc.activityOnFile": {
+  "upperText": "Working on {{currentFileName}}",
+  "lowerText": "Project: {{currentWorkspaceName}}",
+  "imageText": "Editing a {{currentFileExtensionTruncated}} file"
+}
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 📜 License  
 
-## Extension Settings
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.  
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 🙌 Acknowledgements  
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+A huge shoutout to the [vscord](https://github.com/leonardssh/vscord) project for the inspiration and the language releated data—this extension wouldn’t exist without it! ❤️  

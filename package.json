@@ -1,7 +1,7 @@
 {
   "name": "code-rpc",
-  "displayName": "code-rpc",
-  "description": "",
+  "displayName": "Code RPC",
+  "description": "A VSCode extension that brings your coding activity to Discord through Rich Presence.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.96.2"
