@@ -1,11 +1,12 @@
 import path from "path";
+import fs from "fs";
 import * as vscode from "vscode";
 import {SUPPORTED_LANGUAGES, LANGUAGE_EXTENSIONS, SPECIAL_FILES} from "../data/languages.json";
-import {getLanguageImage, testRegex} from "../utils";
-import { Variable } from "../types/variables";
+import {getLanguageImage, testRegex, formatBytes} from "../utils";
+import {Variable} from "../types/variables";
 
 export class ContextManager {
-  public getEnvVariables(): Partial<Record<Variable, string | null>> {
+  public getEnvVariables(): Record<Variable, string | null> {
     const workspaceFolders = vscode.workspace.workspaceFolders;
     const activeTextEditor = vscode.window.activeTextEditor;
 
@@ -16,6 +17,10 @@ export class ContextManager {
     const currentFileExtensionTruncated = activeTextEditor ? this.getFileExtensionTruncated(activeTextEditor) : null;
     const currentWorkspaceName = workspaceFolders && workspaceFolders.length > 0 ? this.getWorkspaceName(workspaceFolders) : null;
     const currentEditorName = this.getEditorName();
+    const currentFileLine = activeTextEditor ? this.getFileLine(activeTextEditor) : null;
+    const currentFileLineCount = activeTextEditor ? this.getFileLineCount(activeTextEditor) : null;
+    const currentFileSize = activeTextEditor ? this.getFileSize(activeTextEditor) : null;
+    const currentWorkspaceSize = workspaceFolders && workspaceFolders.length > 0 ? this.getWorkspaceSize(workspaceFolders) : null;
 
     return {
       [Variable.CURRENT_WORKSPACE_NAME]: currentWorkspaceName,
@@ -25,6 +30,10 @@ export class ContextManager {
       [Variable.CURRENT_FILE_EXTENSION]: currentFileExtension,
       [Variable.CURRENT_FILE_EXTENSION_TRUNCATED]: currentFileExtensionTruncated,
       [Variable.CURRENT_EDITOR_NAME]: currentEditorName,
+      [Variable.CURRENT_FILE_LINE]: currentFileLine,
+      [Variable.CURRENT_FILE_LINE_COUNT]: currentFileLineCount,
+      [Variable.CURRENT_FILE_SIZE]: currentFileSize,
+      [Variable.CURRENT_WORKSPACE_SIZE]: currentWorkspaceSize,
     };
   }
 
@@ -60,7 +69,6 @@ export class ContextManager {
     return fileName;
   }
 
-
   private getFileExtension(activeTextEditor: vscode.TextEditor): string {
     const filePath = this.getFilePath(activeTextEditor);
     return path.extname(filePath);
@@ -74,6 +82,46 @@ export class ContextManager {
   private getWorkspaceName(workspaceFolders: readonly vscode.WorkspaceFolder[]): string {
     const workspaceName = workspaceFolders[0].name;
     return workspaceName;
+  }
+
+  private getFileLine(activeTextEditor: vscode.TextEditor): string {
+    const position = activeTextEditor.selection.active;
+    return (position.line + 1).toString();
+  }
+
+  private getFileLineCount(activeTextEditor: vscode.TextEditor): string {
+    const document = activeTextEditor.document;
+    return document.lineCount.toString();
+  }
+
+  private getFileSize(activeTextEditor: vscode.TextEditor): string {
+    const filePath = this.getFilePath(activeTextEditor);
+    const stats = fs.statSync(filePath);
+    return formatBytes(stats.size);
+  }
+
+  private getWorkspaceSize(workspaceFolders: readonly vscode.WorkspaceFolder[]): string {
+    const workspacePath = workspaceFolders[0].uri.fsPath;
+
+    function calculateSize(directory: string): number {
+      let totalSize = 0;
+      const files = fs.readdirSync(directory);
+
+      for (const file of files) {
+        const filePath = path.join(directory, file);
+        const stats = fs.statSync(filePath);
+
+        if (stats.isDirectory()) {
+          totalSize += calculateSize(filePath);
+        } else {
+          totalSize += stats.size;
+        }
+      }
+      return totalSize;
+    }
+
+    const size = calculateSize(workspacePath);
+    return formatBytes(size);
   }
 
   public getCurrentFileImage(): string | null {
