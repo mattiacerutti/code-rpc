@@ -22,6 +22,10 @@ You can use **variables** inside any of the `upperText`, `lowerText`, or `imageT
 | `{{currentFileExtension}}` | The extension of the currently open file (e.g., `.js`, `.py`). |
 | `{{currentFileExtensionTruncated}}` | The file extension without the leading dot (e.g., `js`, `py`). |
 | `{{currentEditorName}}` | The name of the active editor (e.g., "Visual Studio Code"). |
+| `{{currentFileLine}}` | The current line number in the open file. |
+| `{{currentFileLineCount}}` | The total number of lines in the open file. |
+| `{{currentFileSize}}` | The size of the currently open file. |
+| `{{currentWorkspaceSize}}` | The total size of the current workspace. |
 
 #### 🛠 Example Usage  
 ```json
