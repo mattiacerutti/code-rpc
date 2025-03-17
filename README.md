@@ -1,3 +1,8 @@
+<div align="center">
+<img width="256" alt="VSCord Logo" src="assets/icon.png" />
+<!-- Icon -->
+</div>
+
 # Code RPC  
 
 🚀 A free and open-source VSCode extension that brings your coding activity to Discord with Rich Presence.  
@@ -5,7 +10,7 @@
 ## ✨ Features  
 
 - **🔗 Seamless Discord Integration** – Show what you're working on in VSCode directly in your Discord status!  
-- **💻 Works Everywhere** – Compatible with VSCode and all its forks. If your IDE isn’t supported, feel free to submit a PR!  
+- **💻 Works Everywhere (even Cursor!)** – Compatible with VSCode and all its forks . If your IDE isn’t supported, feel free to submit a PR!  
 - **⚙️ Fully Customizable** – Choose what details to display, hide, or tweak to fit your needs.  
 - **🛠️ Supports 100+ Languages** – Whether you're coding in JavaScript, Python, Rust, or anything else, we’ve got you covered.  
 

@@ -1,9 +1,10 @@
 {
   "name": "code-rpc",
   "displayName": "Code RPC",
-  "description": "A VSCode extension that brings your coding activity to Discord through Rich Presence.",
+  "description": "Bring your coding activity to Discord through Rich Presence.",
   "author": "mattiacerutti",
   "homepage": "https://github.com/mattiacerutti/code-rpc",
+  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/mattiacerutti/code-rpc"
@@ -11,7 +12,12 @@
   "keywords": [
     "discord",
     "rich presence",
-    "vscode",
+    "discord rpc",
+    "rpc",
+    "discord rich presence",
+    "code rpc",
+    "discord activity",
+    "discord presence",
     "coding",
     "activity"
   ],
