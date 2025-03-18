@@ -12,6 +12,7 @@
 - **🔗 Seamless Discord Integration** – Show what you're working on in VSCode directly in your Discord status!  
 - **💻 Works Everywhere (even Cursor!)** – Compatible with VSCode and all its forks . If your IDE isn’t supported, feel free to submit a PR!  
 - **⚙️ Fully Customizable** – Choose what details to display, hide, or tweak to fit your needs.  
+- **🕒 Unique Idle Disconnect Setting** – Don't need to worry anymore about leaving your editor open anymore: automatically disconnect from Discord RPC when idle, reconnecting once activity resumes.  
 - **🛠️ Supports 100+ Languages** – Whether you're coding in JavaScript, Python, Rust, or anything else, we’ve got you covered.  
 
 ## 🔀 Available Variables  
