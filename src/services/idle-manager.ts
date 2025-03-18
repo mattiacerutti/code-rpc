@@ -43,7 +43,7 @@ export class IdleManager {
     }, this.timerDuration * 1000);
   }
 
-  private resetTimer(): void {
+  public resetTimer(): void {
     this.setIdle(false);
     this.startNewTimer();
   }
