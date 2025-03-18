@@ -130,7 +130,7 @@ export default class PresenceManager extends EventEmitter {
   private startUpdating() {
     this.idleManager.resetTimer();
     this.updatePresence();
-    this.updateInterval = setInterval(() => this.updatePresence(), 15333);
+    this.updateInterval = setInterval(() => this.updatePresence(), 15000);
   }
 
   private stopUpdating() {
