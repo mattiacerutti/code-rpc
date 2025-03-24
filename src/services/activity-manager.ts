@@ -50,6 +50,7 @@ export class ActivityManager {
   private getActivityImage(status: ActivityStatus): string | null {
     switch (status) {
       case ActivityStatus.IN_FILE:
+      case ActivityStatus.IN_FILE_NO_WORKSPACE:
         return this.contextManager.getCurrentFileImage();
       case ActivityStatus.DEBUGGING:
         return SettingsManager.instance.getDebuggingImage();
