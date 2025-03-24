@@ -69,22 +69,22 @@ export class ActivityManager {
     let templates;
     switch (status) {
       case ActivityStatus.IN_FILE_NO_WORKSPACE:
-        templates = SettingsManager.instance.getActivityOnFileNoWorkspace();
+        templates = SettingsManager.instance.getActivityInFileNoWorkspace();
         break;
       case ActivityStatus.IN_FILE:
-        templates = SettingsManager.instance.getActivityOnFile();
+        templates = SettingsManager.instance.getActivityInFile();
         break;
       case ActivityStatus.IN_WORKSPACE:
-        templates = SettingsManager.instance.getActivityOnWorkspace();
+        templates = SettingsManager.instance.getActivityInWorkspace();
         break;
       case ActivityStatus.IN_EDITOR:
-        templates = SettingsManager.instance.getActivityOnEditor();
+        templates = SettingsManager.instance.getActivityInEditor();
         break;
       case ActivityStatus.DEBUGGING:
-        templates = SettingsManager.instance.getActivityOnDebugging();
+        templates = SettingsManager.instance.getActivityInDebugging();
         break;
       case ActivityStatus.IDLE:
-        templates = SettingsManager.instance.getActivityOnIdle();
+        templates = SettingsManager.instance.getActivityInIdle();
         break;
     }
 

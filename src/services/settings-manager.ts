@@ -9,31 +9,31 @@ import {
   DEFAULT_PLACEHOLDER_IMAGE,
   DEFAULT_LANGUAGE_IMAGE_TEMPLATE,
   DEFAULT_IDE_IMAGE_TEMPLATE,
-  DEFAULT_ACTIVITY_ON_FILE,
-  DEFAULT_ACTIVITY_ON_WORKSPACE,
-  DEFAULT_ACTIVITY_ON_EDITOR,
-  DEFAULT_ACTIVITY_ON_DEBUGGING,
-  DEFAULT_ACTIVITY_ON_IDLE,
+  DEFAULT_ACTIVITY_ON_FILE as DEFAULT_ACTIVITY_IN_FILE,
+  DEFAULT_ACTIVITY_ON_WORKSPACE as DEFAULT_ACTIVITY_IN_WORKSPACE,
+  DEFAULT_ACTIVITY_ON_EDITOR as DEFAULT_ACTIVITY_IN_EDITOR,
+  DEFAULT_ACTIVITY_ON_DEBUGGING as DEFAULT_ACTIVITY_IN_DEBUGGING,
+  DEFAULT_ACTIVITY_ON_IDLE as DEFAULT_ACTIVITY_IN_IDLE,
   DEFAULT_RETRY_CONNECTION,
-  DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE,
+  DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE as DEFAULT_ACTIVITY_IN_FILE_NO_WORKSPACE,
 } from "../constants";
 
 enum Settings {
-  DISCONNECT_ON_IDLE = "disconnectOnIdle",
-  RETRY_CONNECTION = "retryConnection",
-  IDLE_TIMEOUT = "idleTimeout",
-  RESET_ELAPSED_TIME_ON_IDLE = "resetElapsedTimeOnIdle",
-  IDLE_IMAGE = "idleImage",
-  DEBUGGING_IMAGE = "debuggingImage",
-  PLACEHOLDER_IMAGE = "placeholderImage",
-  LANGUAGE_IMAGE_TEMPLATE = "languageImageTemplate",
-  IDE_IMAGE_TEMPLATE = "ideImageTemplate",
-  ACTIVITY_ON_FILE_NO_WORKSPACE = "activityOnFileNoWorkspace",
-  ACTIVITY_ON_FILE = "activityOnFile",
-  ACTIVITY_ON_WORKSPACE = "activityOnWorkspace",
-  ACTIVITY_ON_EDITOR = "activityOnEditor",
-  ACTIVITY_ON_DEBUGGING = "activityOnDebugging",
-  ACTIVITY_ON_IDLE = "activityOnIdle",
+  DISCONNECT_ON_IDLE = "settings.disconnectOnIdle",
+  RETRY_CONNECTION = "settings.retryConnection",
+  IDLE_TIMEOUT = "settings.idleTimeout",
+  RESET_ELAPSED_TIME_ON_IDLE = "settings.resetElapsedTimeOnIdle",
+  IDLE_IMAGE = "images.idleImage",
+  DEBUGGING_IMAGE = "images.debuggingImage",
+  PLACEHOLDER_IMAGE = "images.placeholderImage",
+  LANGUAGE_IMAGE_TEMPLATE = "images.languageImageTemplate",
+  IDE_IMAGE_TEMPLATE = "images.ideImageTemplate",
+  ACTIVITY_IN_FILE_NO_WORKSPACE = "activity.inFileWithoutWorkspace",
+  ACTIVITY_IN_FILE = "activity.inFile",
+  ACTIVITY_IN_WORKSPACE = "activity.inWorkspace",
+  ACTIVITY_IN_EDITOR = "activity.inEditor",
+  ACTIVITY_IN_DEBUGGING = "activity.inDebugging",
+  ACTIVITY_IN_IDLE = "activity.inIdle",
 }
 
 export class SettingsManager {
@@ -68,7 +68,7 @@ export class SettingsManager {
     return this.settings.get(Settings.RETRY_CONNECTION, DEFAULT_RETRY_CONNECTION);
   }
 
-  public getIdleTimeout(): number {  
+  public getIdleTimeout(): number {
     return this.settings.get(Settings.IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT);
   }
 
@@ -96,57 +96,57 @@ export class SettingsManager {
     return this.settings.get(Settings.IDE_IMAGE_TEMPLATE, DEFAULT_IDE_IMAGE_TEMPLATE);
   }
 
-  public getActivityOnFileNoWorkspace(): {
+  public getActivityInFileNoWorkspace(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_FILE_NO_WORKSPACE, DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE);
-    return {...DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_FILE_NO_WORKSPACE, DEFAULT_ACTIVITY_IN_FILE_NO_WORKSPACE);
+    return {...DEFAULT_ACTIVITY_IN_FILE_NO_WORKSPACE, ...settings};
   }
 
-  public getActivityOnFile(): {
+  public getActivityInFile(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_FILE, DEFAULT_ACTIVITY_ON_FILE);
-    return {...DEFAULT_ACTIVITY_ON_FILE, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_FILE, DEFAULT_ACTIVITY_IN_FILE);
+    return {...DEFAULT_ACTIVITY_IN_FILE, ...settings};
   }
 
-  public getActivityOnWorkspace(): {
+  public getActivityInWorkspace(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_WORKSPACE, DEFAULT_ACTIVITY_ON_WORKSPACE);
-    return {...DEFAULT_ACTIVITY_ON_WORKSPACE, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_WORKSPACE, DEFAULT_ACTIVITY_IN_WORKSPACE);
+    return {...DEFAULT_ACTIVITY_IN_WORKSPACE, ...settings};
   }
 
-  public getActivityOnEditor(): {
+  public getActivityInEditor(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_EDITOR, DEFAULT_ACTIVITY_ON_EDITOR);
-    return {...DEFAULT_ACTIVITY_ON_EDITOR, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_EDITOR, DEFAULT_ACTIVITY_IN_EDITOR);
+    return {...DEFAULT_ACTIVITY_IN_EDITOR, ...settings};
   }
 
-  public getActivityOnDebugging(): {
+  public getActivityInDebugging(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_DEBUGGING, DEFAULT_ACTIVITY_ON_DEBUGGING);
-    return {...DEFAULT_ACTIVITY_ON_DEBUGGING, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_DEBUGGING, DEFAULT_ACTIVITY_IN_DEBUGGING);
+    return {...DEFAULT_ACTIVITY_IN_DEBUGGING, ...settings};
   }
 
-  public getActivityOnIdle(): {
+  public getActivityInIdle(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
   } {
-    const settings = this.settings.get(Settings.ACTIVITY_ON_IDLE, DEFAULT_ACTIVITY_ON_IDLE);
-    return {...DEFAULT_ACTIVITY_ON_IDLE, ...settings};
+    const settings = this.settings.get(Settings.ACTIVITY_IN_IDLE, DEFAULT_ACTIVITY_IN_IDLE);
+    return {...DEFAULT_ACTIVITY_IN_IDLE, ...settings};
   }
 }

@@ -49,52 +49,52 @@
     "configuration": {
       "title": "Code RPC",
       "properties": {
-        "code-rpc.disconnectOnIdle": {
+        "code-rpc.settings.disconnectOnIdle": {
           "type": "boolean",
           "default": false,
           "description": "Disconnect from Discord RPC when idle. Once no more idle, it will reconnect automatically."
         },
-        "code-rpc.retryConnection": {
+        "code-rpc.settings.retryConnection": {
           "type": "boolean",
           "default": true,
           "description": "Automatically try to reconnect to Discord RPC for 2 minutes if no connection is established."
         },
-        "code-rpc.idleTimeout": {
+        "code-rpc.settings.idleTimeout": {
           "type": "number",
           "default": 300,
           "description": "The timeout in seconds to consider the user as idle."
         },
-        "code-rpc.resetElapsedTimeOnIdle": {
+        "code-rpc.settings.resetElapsedTimeOnIdle": {
           "type": "boolean",
           "default": false,
           "description": "When the user goes in or out of idle, the elapsed time will be reset."
         },
-        "code-rpc.idleImage": {
+        "code-rpc.images.idleImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/idle.png",
           "description": "The image to use when the user is idle."
         },
-        "code-rpc.debuggingImage": {
+        "code-rpc.images.debuggingImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/debugging.png",
           "description": "The image to use when the user is debugging."
         },
-        "code-rpc.placeholderImage": {
+        "code-rpc.images.placeholderImage": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/placeholder.png",
           "description": "The image to use when the user is not in a file, workspace or debugging."
         },
-        "code-rpc.languageImageTemplate": {
+        "code-rpc.images.languageImageTemplate": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/languages/{{language}}.png",
           "description": "The template to use to get the language image. The {{language}} will be replaced with the language name found in the languages JSON file."
         },
-        "code-rpc.ideImageTemplate": {
+        "code-rpc.images.ideImageTemplate": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/{{ide}}.png",
           "description": "The template to use to get the IDE image. The {{ide}} will be replaced with the IDE name found in the ide JSON file."
         },
-        "code-rpc.activityOnFileNoWorkspace": {
+        "code-rpc.activity.inFileWithoutWorkspace": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -114,7 +114,7 @@
             }
           }
         },
-        "code-rpc.activityOnFile": {
+        "code-rpc.activity.inFile": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -134,7 +134,7 @@
             }
           }
         },
-        "code-rpc.activityOnWorkspace": {
+        "code-rpc.activity.inWorkspace": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -154,7 +154,7 @@
             }
           }
         },
-        "code-rpc.activityOnEditor": {
+        "code-rpc.activity.inEditor": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -174,7 +174,7 @@
             }
           }
         },
-        "code-rpc.activityOnDebugging": {
+        "code-rpc.activity.inDebugging": {
           "type": "object",
           "properties": {
             "upperText": {
@@ -194,7 +194,7 @@
             }
           }
         },
-        "code-rpc.activityOnIdle": {
+        "code-rpc.activity.inIdle": {
           "type": "object",
           "properties": {
             "upperText": {
