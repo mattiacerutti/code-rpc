@@ -94,6 +94,26 @@
           "default": "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/{{ide}}.png",
           "description": "The template to use to get the IDE image. The {{ide}} will be replaced with the IDE name found in the ide JSON file."
         },
+        "code-rpc.activityOnFileNoWorkspace": {
+          "type": "object",
+          "properties": {
+            "upperText": {
+              "type": ["string", "null"],
+              "default": "Editing {{currentFileName}}",
+              "description": "The upper text to use when the user is in a file but no workspace is open."
+            },
+            "lowerText": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "The lower text to use when the user is in a file but no workspace is open."
+            },
+            "imageText": {
+              "type": ["string", "null"],
+              "default": "Editing a {{currentFileExtensionTruncated}} file",
+              "description": "The text displayed when hovering over the large image when the user is in a file but no workspace is open."
+            }
+          }
+        },
         "code-rpc.activityOnFile": {
           "type": "object",
           "properties": {

@@ -14,6 +14,11 @@ export const DEFAULT_LANGUAGE_IMAGE_TEMPLATE = "https://raw.githubusercontent.co
 export const DEFAULT_IDE_IMAGE_TEMPLATE = "https://raw.githubusercontent.com/mattiacerutti/code-rpc/main/assets/ide/{{ide}}.png";
 
 /* Default values for activity templates */
+export const DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE = {
+  upperText: "Editing {{currentFileName}}",
+  lowerText: null,
+  imageText: "Editing a {{currentFileExtensionTruncated}} file",
+};
 export const DEFAULT_ACTIVITY_ON_FILE = {
   upperText: "Editing {{currentFileName}}",
   lowerText: "In workspace: {{currentWorkspaceName}}",

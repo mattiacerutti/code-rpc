@@ -15,6 +15,7 @@ import {
   DEFAULT_ACTIVITY_ON_DEBUGGING,
   DEFAULT_ACTIVITY_ON_IDLE,
   DEFAULT_RETRY_CONNECTION,
+  DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE,
 } from "../constants";
 
 enum Settings {
@@ -27,6 +28,7 @@ enum Settings {
   PLACEHOLDER_IMAGE = "placeholderImage",
   LANGUAGE_IMAGE_TEMPLATE = "languageImageTemplate",
   IDE_IMAGE_TEMPLATE = "ideImageTemplate",
+  ACTIVITY_ON_FILE_NO_WORKSPACE = "activityOnFileNoWorkspace",
   ACTIVITY_ON_FILE = "activityOnFile",
   ACTIVITY_ON_WORKSPACE = "activityOnWorkspace",
   ACTIVITY_ON_EDITOR = "activityOnEditor",
@@ -58,43 +60,52 @@ export class SettingsManager {
     return SettingsManager._instance;
   }
 
-  getDisconnectOnIdle(): boolean {
+  public getDisconnectOnIdle(): boolean {
     return this.settings.get(Settings.DISCONNECT_ON_IDLE, DEFAULT_DISCONNECT_ON_IDLE);
   }
 
-  getRetryConnection(): boolean {
+  public getRetryConnection(): boolean {
     return this.settings.get(Settings.RETRY_CONNECTION, DEFAULT_RETRY_CONNECTION);
   }
 
-  getIdleTimeout(): number {  
+  public getIdleTimeout(): number {  
     return this.settings.get(Settings.IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT);
   }
 
-  getResetElapsedTimeOnIdle(): boolean {
+  public getResetElapsedTimeOnIdle(): boolean {
     return this.settings.get(Settings.RESET_ELAPSED_TIME_ON_IDLE, DEFAULT_RESET_ELAPSED_TIME_ON_IDLE);
   }
 
-  getIdleImage(): string {
+  public getIdleImage(): string {
     return this.settings.get(Settings.IDLE_IMAGE, DEFAULT_IDLE_IMAGE);
   }
 
-  getDebuggingImage(): string {
+  public getDebuggingImage(): string {
     return this.settings.get(Settings.DEBUGGING_IMAGE, DEFAULT_DEBUGGING_IMAGE);
   }
 
-  getPlaceholderImage(): string {
+  public getPlaceholderImage(): string {
     return this.settings.get(Settings.PLACEHOLDER_IMAGE, DEFAULT_PLACEHOLDER_IMAGE);
   }
 
-  getLanguageImageTemplate(): string {
+  public getLanguageImageTemplate(): string {
     return this.settings.get(Settings.LANGUAGE_IMAGE_TEMPLATE, DEFAULT_LANGUAGE_IMAGE_TEMPLATE);
   }
 
-  getIdeImageTemplate(): string {
+  public getIdeImageTemplate(): string {
     return this.settings.get(Settings.IDE_IMAGE_TEMPLATE, DEFAULT_IDE_IMAGE_TEMPLATE);
   }
 
-  getActivityOnFile(): {
+  public getActivityOnFileNoWorkspace(): {
+    upperText: string | null;
+    lowerText: string | null;
+    imageText: string | null;
+  } {
+    const settings = this.settings.get(Settings.ACTIVITY_ON_FILE_NO_WORKSPACE, DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE);
+    return {...DEFAULT_ACTIVITY_ON_FILE_NO_WORKSPACE, ...settings};
+  }
+
+  public getActivityOnFile(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
@@ -103,7 +114,7 @@ export class SettingsManager {
     return {...DEFAULT_ACTIVITY_ON_FILE, ...settings};
   }
 
-  getActivityOnWorkspace(): {
+  public getActivityOnWorkspace(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
@@ -112,7 +123,7 @@ export class SettingsManager {
     return {...DEFAULT_ACTIVITY_ON_WORKSPACE, ...settings};
   }
 
-  getActivityOnEditor(): {
+  public getActivityOnEditor(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
@@ -121,7 +132,7 @@ export class SettingsManager {
     return {...DEFAULT_ACTIVITY_ON_EDITOR, ...settings};
   }
 
-  getActivityOnDebugging(): {
+  public getActivityOnDebugging(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;
@@ -130,7 +141,7 @@ export class SettingsManager {
     return {...DEFAULT_ACTIVITY_ON_DEBUGGING, ...settings};
   }
 
-  getActivityOnIdle(): {
+  public getActivityOnIdle(): {
     upperText: string | null;
     lowerText: string | null;
     imageText: string | null;

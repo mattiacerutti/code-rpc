@@ -33,7 +33,10 @@ export class ActivityManager {
       return ActivityStatus.IDLE;
     }
     if (this.contextManager.isInFile()) {
-      return ActivityStatus.IN_FILE;
+      if (this.contextManager.isInWorkspace()) {
+        return ActivityStatus.IN_FILE;
+      }
+      return ActivityStatus.IN_FILE_NO_WORKSPACE;
     }
     if (this.contextManager.isInWorkspace()) {
       return ActivityStatus.IN_WORKSPACE;
@@ -65,6 +68,9 @@ export class ActivityManager {
   private formatActivityDetails(status: ActivityStatus, envVariables: Partial<Record<Variable, string | null>>): SetActivity {
     let templates;
     switch (status) {
+      case ActivityStatus.IN_FILE_NO_WORKSPACE:
+        templates = SettingsManager.instance.getActivityOnFileNoWorkspace();
+        break;
       case ActivityStatus.IN_FILE:
         templates = SettingsManager.instance.getActivityOnFile();
         break;
