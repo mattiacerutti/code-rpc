@@ -31,7 +31,6 @@ You can use **variables** inside any of the `upperText`, `lowerText`, or `imageT
 | `{{currentFileLine}}` | The current line number in the open file. |
 | `{{currentFileLineCount}}` | The total number of lines in the open file. |
 | `{{currentFileSize}}` | The size of the currently open file. |
-| `{{currentWorkspaceSize}}` | The total size of the current workspace. |
 
 #### 🛠 Example Usage  
 ```json

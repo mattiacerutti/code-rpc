@@ -9,5 +9,4 @@ export enum Variable {
   CURRENT_FILE_LINE = "currentFileLine",
   CURRENT_FILE_LINE_COUNT = "currentFileLineCount",
   CURRENT_FILE_SIZE = "currentFileSize",
-  CURRENT_WORKSPACE_SIZE = "currentWorkspaceSize",
 }

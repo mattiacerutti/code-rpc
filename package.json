@@ -22,7 +22,7 @@
     "activity"
   ],
   "publisher": "mattiacerutti",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.96.2"
   },
@@ -98,17 +98,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Editing {{currentFileName}}",
               "description": "The upper text to use when the user is in a file but no workspace is open."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": null,
               "description": "The lower text to use when the user is in a file but no workspace is open."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Editing a {{currentFileExtensionTruncated}} file",
               "description": "The text displayed when hovering over the large image when the user is in a file but no workspace is open."
             }
@@ -118,17 +127,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Editing {{currentFileName}}",
               "description": "The upper text to use when the user is in a file."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "In workspace: {{currentWorkspaceName}}",
               "description": "The lower text to use when the user is in a file."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Editing a {{currentFileExtensionTruncated}} file",
               "description": "The text displayed when hovering over the large image when the user is in a file."
             }
@@ -138,17 +156,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "No file currently open",
               "description": "The upper text to use when the user is not in a file (but still in a workspace)."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "In workspace: {{currentWorkspaceName}}",
               "description": "The lower text to use when the user is not in a file (but still in a workspace)."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": null,
               "description": "The text displayed when hovering over the large image when the user is not in a file (but still in a workspace)."
             }
@@ -158,17 +185,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "No project currently open",
               "description": "The upper text to use when the user is not in a file or workspace."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "In the editor",
               "description": "The lower text to use when the user is not in a file or workspace."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": null,
               "description": "The text displayed when hovering over the large image when the user is not in a file or workspace."
             }
@@ -178,17 +214,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Debugging {{currentFileName}}",
               "description": "The upper text to use when the user is debugging."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Debugging {{currentFileName}}",
               "description": "The lower text to use when the user is debugging."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": null,
               "description": "The text displayed when hovering over the large image when the user is debugging."
             }
@@ -198,17 +243,26 @@
           "type": "object",
           "properties": {
             "upperText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "Inactive..",
               "description": "The upper text to use when the user is idle."
             },
             "lowerText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": null,
               "description": "The lower text to use when the user is idle."
             },
             "imageText": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "default": "💤",
               "description": "The text displayed when hovering over the large image when the user is idle."
             }

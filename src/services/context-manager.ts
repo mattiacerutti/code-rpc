@@ -20,7 +20,6 @@ export class ContextManager {
     const currentFileLine = activeTextEditor ? this.getFileLine(activeTextEditor) : null;
     const currentFileLineCount = activeTextEditor ? this.getFileLineCount(activeTextEditor) : null;
     const currentFileSize = activeTextEditor ? this.getFileSize(activeTextEditor) : null;
-    const currentWorkspaceSize = workspaceFolders && workspaceFolders.length > 0 ? this.getWorkspaceSize(workspaceFolders) : null;
 
     return {
       [Variable.CURRENT_WORKSPACE_NAME]: currentWorkspaceName,
@@ -33,7 +32,6 @@ export class ContextManager {
       [Variable.CURRENT_FILE_LINE]: currentFileLine,
       [Variable.CURRENT_FILE_LINE_COUNT]: currentFileLineCount,
       [Variable.CURRENT_FILE_SIZE]: currentFileSize,
-      [Variable.CURRENT_WORKSPACE_SIZE]: currentWorkspaceSize,
     };
   }
 
@@ -98,30 +96,6 @@ export class ContextManager {
     const filePath = this.getFilePath(activeTextEditor);
     const stats = fs.statSync(filePath);
     return formatBytes(stats.size);
-  }
-
-  private getWorkspaceSize(workspaceFolders: readonly vscode.WorkspaceFolder[]): string {
-    const workspacePath = workspaceFolders[0].uri.fsPath;
-
-    function calculateSize(directory: string): number {
-      let totalSize = 0;
-      const files = fs.readdirSync(directory);
-
-      for (const file of files) {
-        const filePath = path.join(directory, file);
-        const stats = fs.statSync(filePath);
-
-        if (stats.isDirectory()) {
-          totalSize += calculateSize(filePath);
-        } else {
-          totalSize += stats.size;
-        }
-      }
-      return totalSize;
-    }
-
-    const size = calculateSize(workspacePath);
-    return formatBytes(size);
   }
 
   public getCurrentFileImage(): string | null {

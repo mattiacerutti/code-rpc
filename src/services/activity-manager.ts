@@ -3,7 +3,6 @@ import {ContextManager} from "./context-manager";
 import {Activity, ActivityStatus} from "../types/activity";
 import {replaceEnvVariables} from "../utils";
 import {IdleManager} from "./idle-manager";
-import {Variable} from "../types/variables";
 import { SettingsManager } from "./settings-manager";
 
 export class ActivityManager {
@@ -66,7 +65,7 @@ export class ActivityManager {
     return editorName;
   }
 
-  private formatActivityDetails(status: ActivityStatus, envVariables: Partial<Record<Variable, string | null>>): SetActivity {
+  private formatActivityDetails(status: ActivityStatus, envVariables: Record<string, string | null>): SetActivity {
     let templates;
     switch (status) {
       case ActivityStatus.IN_FILE_NO_WORKSPACE:
